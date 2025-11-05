@@ -1,8 +1,7 @@
-### 🚀 YAE Backend – Quick Start Guide
+## 🚀 YAE Backend – Quick Start Guide
 
 > ⚡ Fast. Secure. Bun-powered.Built for performance and focus on DX
 
----
 
 ### 💻 Installation
 
