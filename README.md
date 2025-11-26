@@ -1,6 +1,22 @@
 ## 🚀 YAE Backend – Quick Start Guide
 
-> ⚡ Fast. Secure. Bun-powered.Built for performance and focus on DX
+> ⚡ A fast backend foundation powered by Bun — built for performance, developer experience, and seamless integration with YAE-BOT.
+
+
+### Overview
+
+The YAE Backend provides a lightweight, high-performance starting point for scalable backend projects.
+Powered by Bun, it focuses on:
+
+- ⚡ Speed
+
+- 🔐 Security
+
+- 🧩 Clean architecture
+
+- 👨‍💻 Developer experience (DX)
+
+Whether you’re building APIs, bots, or full-stack applications, this backend is optimized to help you ship faster.
 
 
 ### 💻 Installation
@@ -11,7 +27,7 @@
 git clone https://github.com/OuOSama/YAE-BACKEND.git backend
 ```
 
-#### Navigate to the project folder
+#### Navigate into project directory
 
 ```bash
 cd backend
@@ -25,11 +41,25 @@ bun install
 
 ### 📚 Documentation
 
-- #### 📂 Explore all each systems docs here: "[./docs](./docs/systems)"
+- #### 📂 All system documentation is available in the "[./docs](./docs/systems)"
+
+You will find details on:
+
+- Core architecture
+
+- Modules
+
+- Helpers
+
+- API structure
+
+- YAE-BOT integration
 
 ### 🐳 Deployment
 
-Easily deploy to your favorite platforms — we’ve got you covered with a "Dockerfile"
+The project ships with a ready-to-use Dockerfile, making deployment simple across various platforms.
+
+### Deployment Guides:
 
 - [🧭 Railway Docker Guide](https://docs.railway.com/reference/dockerfiles)
 
