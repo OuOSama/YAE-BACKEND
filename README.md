@@ -38,3 +38,7 @@ Easily deploy to your favorite platforms — we’ve got you covered with a "Doc
 ### 📝 License
 
 This project is licensed under the MIT License 🔓
+
+### ⚡ experiment zone
+- lavalink
+- n8n
