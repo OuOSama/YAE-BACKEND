@@ -17,9 +17,9 @@ services:
       # - LAVALINK_SERVER_PASSWORD=youshallnotpass
     volumes:
       # mount application.yaml from the same directory, if you want to use environment variables remove this line below
-      - ./application.yaml:/opt/Lavalink/application.yaml
+      - ./application.yaml:/opt/external-services/Lavalink/application.yaml
       # persist plugins between restarts, make sure to create the folder & set the correct permissions and user/group id mentioned above
-      - ./plugins/:/opt/Lavalink/plugins/
+      - ./plugins/:/opt/external-services/Lavalink/plugins/
     networks:
       - lavalink
     expose:

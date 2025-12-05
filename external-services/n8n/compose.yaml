@@ -25,6 +25,8 @@ services:
     restart: always
     ports:
       - "127.0.0.1:5678:5678"
+    env_file:
+      - .env
     labels:
       - traefik.enable=true
       - traefik.http.routers.n8n.rule=Host(`${SUBDOMAIN}.${DOMAIN_NAME}`)
