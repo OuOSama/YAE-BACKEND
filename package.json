@@ -4,18 +4,21 @@
 	"scripts": {
 		"dev": "bun run --bun --watch src/app.ts",
 		"start": "bun run src/app.ts",
+		"test": "bun test",
+		"test:prod": "NODE_ENV=production bun test",
 		"check": "bunx biome check --write --no-errors-on-unmatched",
 		"prepare": "bunx husky"
 	},
 	"dependencies": {
 		"@elysiajs/openapi": "^1.4.11",
-		"elysia": "latest"
+		"elysia": "latest",
+		"openai": "^6.10.0"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.3.3",
+		"@biomejs/biome": "^2.3.8",
 		"bun-types": "latest",
 		"husky": "^9.1.7",
-		"lint-staged": "^16.2.6"
+		"lint-staged": "^16.2.7"
 	},
 	"lint-staged": {
 		"*.{ts,json}": [
