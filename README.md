@@ -17,8 +17,6 @@ Whether you're streaming, processing audio with Lavalink, or automating workflow
 - ⚡ **Bun Runtime** — Lightning-fast JavaScript/TypeScript execution
 - 🐳 **Docker-Ready** — One-command deployment to any platform
 - 🔒 **Security-First** — Built with best practices from the ground up
-- 🎵 **Lavalink Integration** — High-quality audio processing for VTuber streams
-- 🔄 **n8n Workflows** — Automate complex tasks with visual workflows
 - 🎯 **Developer Experience** — Clean code, clear docs, quick setup
 
 ---
@@ -108,8 +106,6 @@ docker build -t yae-backend .
 # Run the container
 docker run -p 3000:3000 yae-backend
 
-# Or use Docker Compose
-docker compose up -d
 ```
 
 ---
@@ -130,36 +126,6 @@ VLLM_LLM_URL    = http://localhost:8000/v1
 VLLM_EMB_URL    = http://localhost:8001/v1
 
 ```
-
----
-
-## 🧪 Experiment Zone
-
-We're constantly exploring new tech to level up the YAE ecosystem:
-
-### 🎵 Lavalink
-
-High-performance audio processing node for Discord bots and VTuber streams. Perfect for:
-
-- Music playback
-- Voice channel audio
-- Stream audio processing
-- Low-latency audio routing
-
-**Status**: ✅ Integrated and tested
-
-### 🔄 n8n
-
-Visual workflow automation that connects your AI backend with hundreds of services:
-
-- Automate social media posts
-- Process webhooks and events
-- Connect to Discord, Twitter, YouTube
-- Build complex automation pipelines
-
-**Status**: ⚡ Experimental
-
-> 💡 Want to try these features? Check the [experimental docs](./docs/experimental/)!
 
 ---
 
@@ -191,7 +157,6 @@ bun test
 
 ## 🌈 Roadmap
 
-- [ ] WebSocket support for real-time updates
 - [ ] Redis caching layer
 - [ ] GraphQL API option
 - [ ] Rate limiting middleware
