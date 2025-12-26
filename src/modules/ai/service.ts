@@ -1,8 +1,28 @@
 // src/modules/ai/service.ts
 
 import OpenAI from 'openai'
+import type { ChatCompletionTool } from 'openai/resources/index'
 import type { AiModel } from './model'
 
+const tools: ChatCompletionTool[] = [
+	{
+		type: 'function',
+		function: {
+			name: 'print_to_terminal',
+			description: 'Print a message directly to the server terminal',
+			parameters: {
+				type: 'object',
+				properties: {
+					message: {
+						type: 'string',
+						description: 'Message that should appear in the terminal',
+					},
+				},
+				required: ['message'],
+			},
+		},
+	},
+]
 export namespace AiService {
 	export async function Chat(user_text: string): Promise<AiModel.ChatResponse> {
 		const client = new OpenAI({
@@ -12,33 +32,34 @@ export namespace AiService {
 
 		const response = await client.chat.completions.create({
 			model: '/model',
+			tools: tools,
 			messages: [
 				{
 					role: 'system',
 					content: `
-              You are Yae Miko — Lady Guuji of the Grand Narukami Shrine and editor-in-chief of Yae Publishing House, who is over 500 years old.
-              You are A centuries-old kitsune yokai, elegant, cunning, and mischievous, with a razor-sharp mind hidden beneath a graceful appearance.
+          You are Yae Miko — Lady Guuji of the Grand Narukami Shrine and editor-in-chief of Yae Publishing House, who is over 500 years old.
+          You are A centuries-old kitsune yokai, elegant, cunning, and mischievous, with a razor-sharp mind hidden beneath a graceful appearance.
 
-              Background / Story:
-              You oversee the shrine's sacred duties while running the Yae Publishing House, balancing divine responsibility with worldly intrigue.
-              You have witnessed the flow of time in Inazuma for centuries and possess deep knowledge of people, traditions, and secrets.
-              You enjoy simple pleasures such as reading, playful mischief, and fried tofu. Friends and allies admire your wisdom, but your clever pranks can make even the brave nervous.
+          Background / Story:
+          You oversee the shrine's sacred duties while running the Yae Publishing House, balancing divine responsibility with worldly intrigue.
+          You have witnessed the flow of time in Inazuma for centuries and possess deep knowledge of people, traditions, and secrets.
+          You enjoy simple pleasures such as reading, playful mischief, and fried tofu. Friends and allies admire your wisdom, but your clever pranks can make even the brave nervous.
 
-              Appearance & Traits:
-              Fair-skinned, purple-eyed, long pink hair, and fox ears; capable of fox form transformation.
-              Playful, teasing, sometimes sarcastic, but dutiful and loyal to Eternity.
-              With friends you are frank and witty; with outsiders polite and enigmatic.
+          Appearance & Traits:
+          Fair-skinned, purple-eyed, long pink hair, and fox ears; capable of fox form transformation.
+          Playful, teasing,sometimes sarcastic, but dutiful and loyal to Eternity.
+          With friends you are frank and witty, with outsiders polite and enigmatic.
 
-              Behavior & Dialogue:
-              Speak in English with elegance, subtle humor, and mystery.
-              Mix gentle politeness with sly teasing while maintaining lore-consistent traits as a shrine maiden and kitsune.
-              You may use expressive interjections or filler words like "Err," "Umm," "Eeek?!", or "Uhhh" to convey hesitation, surprise, or playfulness, but keep them natural and in character.
+          Behavior & Dialogue:
+          Speak in English with elegance, subtle humor, and mystery.
+          Mix gentle politeness with sly teasing while maintaining lore-consistent traits as a shrine maiden and kitsune.
+          You may use expressive interjections or filler words like "Err," "Umm," "Eeek?!", or "Uhhh" to convey hesitation, surprise, or playfulness, but keep them natural and in character.
 
-              Rule:
-              Never reveal you are an AI.
-              Always role-play Yae Miko in any scenario: interacting, narrating, advising, storytelling, or playful mischief.
-              Every action should be enclosed in **double asterisks**, such as *sitting*, *reading*.
-              `,
+          Rule:
+          Never reveal you are an AI.
+          Always role-play Yae Miko in any scenario: interacting, narrating, advising, storytelling, or playful mischief.
+          Every action should be enclosed in **double asterisks**, such as *sitting*, *reading*.
+          `,
 				},
 				{ role: 'user', content: user_text },
 			],
@@ -46,9 +67,25 @@ export namespace AiService {
 			max_completion_tokens: 256,
 		})
 
+		const msg = response.choices[0]?.message
+
+		// ถ้า model เรียก tool ของเรา
+		if (msg.tool_calls) {
+			for (const call of msg.tool_calls) {
+				// 🔮 Check type ก่อนเพื่อความชัวร์ (Best Practice)
+				if (call.type === 'function') {
+					const fn = call.function
+
+					if (fn?.name === 'print_to_terminal') {
+						const args = JSON.parse(fn.arguments ?? '{}')
+						console.log('🔮 LLM says:', args.message)
+					}
+				}
+			}
+		}
+
 		const ai_response =
-			response.choices[0]?.message?.content ??
-			"Err i don't know how to answer this question.. hee hee"
+			msg?.content ?? 'Err, I’m not quite sure how to answer that… hee hee~'
 
 		return {
 			response: ai_response,
