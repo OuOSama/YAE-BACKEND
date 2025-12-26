@@ -10,12 +10,14 @@
 		"prepare": "bunx husky"
 	},
 	"dependencies": {
-		"@elysiajs/openapi": "^1.4.11",
+		"@elysiajs/jwt": "^1.4.0",
+		"@elysiajs/openapi": "^1.4.12",
 		"elysia": "latest",
-		"openai": "^6.10.0"
+		"elysia-rate-limit": "^4.4.2",
+		"openai": "^6.15.0"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.3.8",
+		"@biomejs/biome": "^2.3.10",
 		"bun-types": "latest",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.2.7"
