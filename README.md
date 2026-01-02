@@ -4,6 +4,11 @@
 
 ---
 
+## 🎯 Core Concept
+A backend foundation that can be deployed to **any provider** — with **no vendor, platform, or database lock-in**.
+
+---
+
 ## 🌟 Overview
 
 **YAE Backend** is the powerhouse behind your AI VTuber companion. Built with Bun for blazing-fast performance, this backend handles all the heavy lifting — from API routes to audio processing — while keeping developer experience at its core.
@@ -25,11 +30,12 @@ Whether you're streaming, processing audio with Lavalink, or automating workflow
 
 ### Prerequisites
 
-| Tool       | Description                  | Installation                                      |
-| ---------- | ---------------------------- | ------------------------------------------------- |
-| **Bun**    | JavaScript runtime & toolkit | [Install Bun](https://bun.sh/docs/installation)   |
-| **Git**    | Version control              | [Install Git](https://git-scm.com/downloads)      |
-| **Docker** | Container deployment         | [Get Docker](https://docs.docker.com/get-docker/) |
+| Tool       | Description                        | Installation                                      |
+| ---------- | ---------------------------------- | ------------------------------------------------- |
+| **Bun**    | JavaScript runtime & toolkit       | [Install Bun](https://bun.sh/docs/installation)   |
+| **Git**    | Version control                    | [Install Git](https://git-scm.com/downloads)      |
+| **Docker** | Container deployment               | [Get Docker](https://docs.docker.com/get-docker/) |
+| **Bruno**  | Local-first, Git-native API client | [Bruno](https://www.usebruno.com/)                |
 
 ### Quick Start
 
@@ -59,7 +65,7 @@ backend/
 │   └── systems/          # System-specific documentation
 ├── src/
 │   ├── modules/          # API endpoints, Business logic
-│   ├── types/            # Tyeps
+│   ├── types/            # Types
 │   ├── app.ts            # Entry point
 │   └── index.ts          # Cluster mode
 ├── Dockerfile            # Container configuration
@@ -75,10 +81,9 @@ Detailed documentation for each system is available in the `docs` folder:
 
 ### 📖 Available Docs
 
-- 🎵 **[Lavalink Setup](./docs/systems/lavalink.md)** — Audio processing configuration
-- 🔄 **[n8n Integration](./docs/systems/n8n.md)** — Workflow automation guide
-- 🔌 **[API Reference](./docs/systems/api.md)** — Endpoint documentation
-- 🔧 **[Configuration](./docs/systems/config.md)** — Environment setup
+- 🔌 [API Reference](./docs/bruno/) — API endpoint documentation
+- 💻 [Systems](./docs/systems/)     — System architecture & README
+- 📚 [Resources](./docs/resources/) — Shared resources & references
 
 > 💡 **Tip**: Start with the system docs that match your use case!
 
@@ -104,7 +109,7 @@ Deploy to your favorite platforms with ease using our included Dockerfile.
 docker build -t yae-backend .
 
 # Run the container
-docker run -p 3000:3000 yae-backend
+docker run -p 3001:3001 yae-backend
 
 ```
 
@@ -118,7 +123,7 @@ Create a `.env` file in the root directory:
 
 ```env
 # Server Configuration
-PORT=3000
+PORT=3001
 NODE_ENV=production
 
 # vLLM endpoint for our LLM & EMB
@@ -199,8 +204,8 @@ We'd love your contributions to make YAE Backend even more powerful!
 
 **Issue**: Port already in use
 
-- **Fix**: Change the `PORT` in your `.env.local` file
-- **Fix**: Kill the process using the port: `lsof -ti:3000 | xargs kill`
+- **Fix**: Change the `PORT` in your `.env.local` / `.env` file
+- **Fix**: Kill the process using the port: `lsof -ti:3001 | xargs kill`
 
 **Issue**: Docker build fails
 
