@@ -1,7 +1,5 @@
 declare module 'bun' {
 	interface Env {
-		JWT_SECRET: string
-		BACKEND_KEY: string
 		PORT: string
 
 		VLLM_LLM_KEY: string
@@ -10,5 +8,13 @@ declare module 'bun' {
 		VLLM_EMB_URL: string
 
 		NODE_ENV: 'test' | 'production'
+
+		DATABASE_URL: string
+
+		BETTER_AUTH_URL: string
+		BETTER_AUTH_SECRET: string
+
+		DISCORD_CLIENT_ID: string
+		DISCORD_CLIENT_SECRET: string
 	}
 }
