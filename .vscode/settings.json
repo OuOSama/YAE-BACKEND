@@ -1,0 +1,7 @@
+{
+	// ✨ VS Code Settings
+	"editor.smoothScrolling": true,
+	"editor.mouseWheelScrollSensitivity": 6,
+	"editor.fastScrollSensitivity": 5,
+	"editor.cursorSmoothCaretAnimation": "on"
+}
