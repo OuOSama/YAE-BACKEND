@@ -1,61 +1,38 @@
 // src/app.ts
 
-import jwt from '@elysiajs/jwt'
+import cors from '@elysiajs/cors'
 import openapi from '@elysiajs/openapi'
-import { Elysia, t } from 'elysia'
+import { Elysia } from 'elysia'
+import { auth } from './lib/auth'
+
+// modules
 import { ai } from './modules/ai'
 import { broadcast } from './modules/broadcast'
-import type { jwtPayload } from './types/jwt'
 
 const app = new Elysia()
-	.decorate('store', {
-		jwtPayload: null as jwtPayload['jwtPayload'],
-	})
-	.use(jwt({ name: 'jwt', secret: process.env.JWT_SECRET }))
-
-// 🏠 public
-app
-	.get('/', () => ({ message: '⚡ Hello YAE-BACKEND!' }))
-	.use(openapi())
-	.post(
-		'/get-access',
-		async ({ body, jwt, status }) => {
-			// TODO: impairment with database to store password and scope | Supabase, Surrealdb ?
-			if (body.secret !== process.env.BACKEND_KEY) return status(403)
-			const token = await jwt.sign({
-				iss: 'yae-core',
-				scope: ['broadcast'],
-				exp: '24h',
-			})
-			return {
-				token: token,
-			}
-		},
-		{
-			body: t.Object({ secret: t.String() }),
-		},
+	.use(
+		cors({
+			origin: ['http://localhost:3000'], // only frontend
+			methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+			credentials: true,
+		}),
 	)
+	.mount(auth.handler)
 
-// 🔒 private
-app.guard(
-	{
-		async beforeHandle({ headers, status, jwt, store }) {
-			const token = headers.authorization?.replace('Bearer ', '')
-			if (!token) return status(401)
+	// 🏠 public
+	.get('/', () => ({
+		message: '⚡ Hello YAE-BACKEND!',
+	}))
 
-			const payload = await jwt.verify(token)
-			if (!payload) return status(401)
+	// 📦 feature modules (ตอนนี้ยัง public ทั้งหมด)
+	.use(ai)
+	.use(broadcast)
 
-			store.jwtPayload = payload
-		},
-	},
-	(app) =>
-		app
-			.use(broadcast)
-			.use(ai)
-			.get('/test', () => ({ name: 'hello from authentication!' })),
-)
+	// 📚 docs
+	.use(openapi())
 
 app.listen(process.env.PORT ?? 3000)
 
 console.log(`🦊 http://${app.server?.hostname}:${app.server?.port}`)
+
+export type App = typeof app
