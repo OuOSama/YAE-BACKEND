@@ -19,9 +19,9 @@ http://localhost:3001/ai/rag
 
 | File                                           | Purpose                                         |
 | ---------------------------------------------- | ----------------------------------------------- |
-| **[index.ts](../src/modules/ai/index.ts)**     | HTTP/HTTPS endpoint handler                     |
-| **[model.ts](../src/modules/ai/model.ts)**     | Type-safe models with Elysia validation         |
-| **[service.ts](../src/modules/ai/service.ts)** | Core AI logic, message handling & response flow |
+| **[index.ts](../../src/modules/ai/index.ts)**     | HTTP/HTTPS endpoint handler                     |
+| **[model.ts](../../src/modules/ai/model.ts)**     | Type-safe models with Elysia validation         |
+| **[service.ts](../../src/modules/ai/service.ts)** | Core AI logic, message handling & response flow |
 
 ---
 
