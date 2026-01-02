@@ -16,9 +16,9 @@
   
   | File                                                  | Purpose                                        |
   | ----------------------------------------------------- | ---------------------------------------------- |
-  | **[index.ts](../src/modules/broadcast/index.ts)**     | WebSocket server setup & event handlers        |
-  | **[model.ts](../src/modules/broadcast/model.ts)**     | Type-safe status models with Elysia validation |
-  | **[service.ts](../src/modules/broadcast/service.ts)** | Status cache & runtime type guards             |
+  | **[index.ts](../../src/modules/broadcast/index.ts)**     | WebSocket server setup & event handlers        |
+  | **[model.ts](../../src/modules/broadcast/model.ts)**     | Type-safe status models with Elysia validation |
+  | **[service.ts](../../src/modules/broadcast/service.ts)** | Status cache & runtime type guards             |
   
   ---
   
