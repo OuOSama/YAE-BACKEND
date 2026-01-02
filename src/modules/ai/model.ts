@@ -1,5 +1,5 @@
 // src/modules/ai/model.ts
-//
+
 import { t } from 'elysia'
 
 export namespace AiModel {
