@@ -7,18 +7,28 @@
 		"test": "bun test",
 		"test:prod": "NODE_ENV=production bun test",
 		"check": "bunx biome check --write --no-errors-on-unmatched",
-		"prepare": "bunx husky"
+		"prepare": "bunx husky",
+		"db:gen": "bunx drizzle-kit generate",
+		"db:migrate": "bunx drizzle-kit migrate",
+		"db:push": "bunx drizzle-kit push",
+		"auth:gen": "bunx @better-auth/cli@latest info --config ./src/lib/auth.ts generate",
+		"auth:migrate": "bunx @better-auth/cli@latest info --config ./src/lib/auth.ts migrate"
 	},
 	"dependencies": {
-		"@elysiajs/jwt": "^1.4.0",
-		"@elysiajs/openapi": "^1.4.12",
+		"@elysiajs/cors": "^1.4.1",
+		"@elysiajs/openapi": "^1.4.13",
+		"better-auth": "^1.4.10",
+		"dotenv": "^17.2.3",
+		"drizzle-orm": "^0.45.1",
+		"drizzle-typebox": "^0.3.3",
 		"elysia": "latest",
-		"elysia-rate-limit": "^4.4.2",
-		"openai": "^6.15.0"
+		"openai": "^6.15.0",
+		"postgres": "^3.4.7"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.3.10",
 		"bun-types": "latest",
+		"drizzle-kit": "^0.31.8",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.2.7"
 	},
