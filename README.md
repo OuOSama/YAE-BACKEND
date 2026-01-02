@@ -13,7 +13,6 @@ A backend foundation that can be deployed to **any provider** — with **no vend
 
 **YAE Backend** is the powerhouse behind your AI VTuber companion. Built with Bun for blazing-fast performance, this backend handles all the heavy lifting — from API routes to audio processing — while keeping developer experience at its core.
 
-Whether you're streaming, processing audio with Lavalink, or automating workflows with n8n, this backend is engineered to handle it all with style. 💜✨
 
 ---
 
