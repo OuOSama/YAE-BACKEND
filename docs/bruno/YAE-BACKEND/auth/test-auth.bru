@@ -1,0 +1,42 @@
+meta {
+  name: test
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:3001/api/test-auth
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ5YWUtYmFja2VuZCIsImlzcyI6InlhZS1jb3JlIiwic3ViIjoiYm90LXNlcnZpY2UiLCJyb2xlIjoic2VydmljZSIsInNjb3BlcyI6WyJhaTp3cml0ZSJdLCJleHAiOjE3NjgxNTE3NDEsImlhdCI6MTc2NzU0Njk0MX0.uod22hMMrtp8LS5yGaLgeKghaO9mqFQmUjAGiS7a0P8
+}
+
+docs {
+  ### 🛡️ Route: `http://localhost:3001/api/test-auth`
+  
+  **Purpose:** Verifies client identity via **stateless Bearer Token** validation against internal secrets. 🔑✨ and access our premium services! 🦊🛡️
+  
+  ---
+  
+  ### 📋 Specification
+  
+  | Detail | Value |
+  | :--- | :--- |
+  | **Method** | `GET` |
+  | **Auth Type** | `Bearer Token` 🔒 |
+  | **Security** | Stateless Validation (Internal Secrets) ⚙️ |
+  | **Module** | Authentication Guard 🛡️ |
+  
+  ---
+  
+  ### 📤 Responses
+  
+  * **✅ 200 OK** `Access Granted!` ยินดีต้อนรับเข้าสู่ Private Zone นะคะ~ 🎊✨
+  * **🚫 401 Unauthorized** `Oops!` Did you forget, or have you forgotten to enter your token for a long time? Try again! 💢❌
+  
+  ---
+  
+}
