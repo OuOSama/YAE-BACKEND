@@ -1,4 +1,4 @@
-// src/database/setup.ts
+// src/database/client.ts
 
 /**
  * Database setup using Drizzle ORM + postgres.js
