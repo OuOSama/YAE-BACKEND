@@ -1,11 +1,11 @@
-// src/lib/auth.ts
+// src/lib/auth/userAuth.ts
 
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
-import * as schema from '../database/schema'
-import { db } from '../database/setup'
+import { db } from '../../database/client'
+import * as schema from '../../database/schema'
 
-export const auth = betterAuth({
+export const userAuth = betterAuth({
 	database: drizzleAdapter(db, {
 		schema: schema,
 		usePlural: true,
