@@ -1,10 +1,12 @@
 // src/modules/ai/index.ts
 
 import Elysia from 'elysia'
+import { requireScope } from 'src/lib/auth'
 import { AiModel } from './model'
 import { AiService } from './service'
 
 export const ai = new Elysia({ prefix: '/ai' })
+	.use(requireScope(['ai:write']))
 	.post(
 		'/chat',
 		async ({ body }) => {
@@ -17,3 +19,4 @@ export const ai = new Elysia({ prefix: '/ai' })
 		},
 	)
 	.post('/rag', () => {})
+	.get('/hi', () => 'hi')
