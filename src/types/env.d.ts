@@ -16,5 +16,8 @@ declare module 'bun' {
 
 		DISCORD_CLIENT_ID: string
 		DISCORD_CLIENT_SECRET: string
+
+		SERVICE_JWT_SECRET: string
+		SERVICE_BOT_TOKEN: string
 	}
 }
