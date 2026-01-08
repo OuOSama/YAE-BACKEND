@@ -167,7 +167,7 @@ bun test
 - [ ] Automated CI/CD pipelines
 - [ ] Performance monitoring dashboard
 - [ ] Multi-language support
-- [ ] Plugin system for extensibility
+- [ ] Web Dashboard management (Next.Js) YAE-Dashboard?
 
 ---
 
