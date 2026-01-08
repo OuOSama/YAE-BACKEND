@@ -1,12 +1,12 @@
 // src/modules/ai/index.ts
 
 import Elysia from 'elysia'
-import { requireScope } from 'src/lib/auth'
+import { requiredScope } from 'src/lib/auth'
 import { AiModel } from './model'
 import { AiService } from './service'
 
 export const ai = new Elysia({ prefix: '/ai' })
-	.use(requireScope(['ai:write']))
+	.use(requiredScope)
 	.post(
 		'/chat',
 		async ({ body }) => {
@@ -16,7 +16,17 @@ export const ai = new Elysia({ prefix: '/ai' })
 		{
 			body: AiModel.ChatRequest,
 			response: AiModel.ChatResponse,
+			permission: ['ai:write'],
 		},
 	)
 	.post('/rag', () => {})
-	.get('/hi', () => 'hi')
+	.get(
+		'/hi',
+		() => {
+			console.log('Debug Hi - Payload:')
+			return 'hi'
+		},
+		{
+			permission: ['ai:write'],
+		},
+	)
