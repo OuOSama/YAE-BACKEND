@@ -1,42 +1,45 @@
 // src/lib/auth/requireScope.ts
 
 import { jwt } from '@elysiajs/jwt'
-import type { Elysia } from 'elysia'
+import { Elysia, t } from 'elysia'
 
-export const requireScope = (value: string[] | string) => {
-	const requiredScopes = Array.isArray(value) ? value : [value]
+export const requiredScope = new Elysia({
+	name: 'required-scopes-plugin',
+})
+	.use(
+		jwt({
+			name: 'jwt',
+			secret: process.env.SERVICE_JWT_SECRET || 'fallback-secret',
+			schema: t.Object({
+				scopes: t.Array(t.String()),
+			}),
+		}),
+	)
+	.macro({
+		permission: (scopes: string[] | string) => {
+			const required = Array.isArray(scopes) ? scopes : [scopes]
+			return {
+				async beforeHandle({ jwt, headers, set }) {
+					const auth = headers.authorization
+					const token = auth?.startsWith('Bearer ') ? auth.slice(7) : null
 
-	return (app: Elysia) =>
-		app
-			.use(
-				jwt({
-					name: 'jwt',
-					secret: process.env.SERVICE_JWT_SECRET,
-				}),
-			)
-			.onBeforeHandle(async ({ headers, jwt, set }) => {
-				const token = headers.authorization?.replace('Bearer ', '')
-				if (!token) {
-					set.status = 401
-					return Error('401, Token missing! 🛡️')
-				}
+					if (!token) {
+						set.status = 401
+						throw new Error('Unauthorized: Token is missing! 🛡️')
+					}
 
-				const payload = await jwt.verify(token)
-				if (!payload) {
-					set.status = 401
+					const payload = await jwt.verify(token)
 
-					return Error('401, Invalid token! ❌')
-				}
+					const hasAllScopes =
+						payload && required.every((s) => payload.scopes.includes(s))
 
-				const userScopes = (payload.scopes as string[]) ?? []
-				const hasPermission = requiredScopes.every((s) =>
-					userScopes.includes(s),
-				)
-
-				if (!hasPermission) {
-					set.status = 401
-
-					return Error('403, Insufficient permissions! ❌')
-				}
-			})
-}
+					if (!hasAllScopes) {
+						set.status = 403
+						throw new Error(
+							`Forbidden: Required scopes [${required.join(', ')}] 🔑`,
+						)
+					}
+				},
+			}
+		},
+	})
