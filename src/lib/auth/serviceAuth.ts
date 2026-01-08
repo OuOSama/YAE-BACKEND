@@ -14,19 +14,15 @@ export const serviceAuth = new Elysia()
 	)
 	.get(
 		'/get-access',
-		async ({ headers, jwt, set }) => {
+		async ({ headers, jwt, status }) => {
 			const serviceKey = headers['x-service-key']
 
-			if (!serviceKey) {
-				set.status = 401
-				return Error('Unauthorized: Missing Service Key')
-			}
+			if (!serviceKey) return status(401, 'Forbidden: Invalid Service Key')
 
-			// TODO: Implement database-backed service key and scope management
+			// 💡 FUTURE-PROOF: Implement DB storage to manage dynamic scopes and service-level rotation.
 			// BOT service
 			if (serviceKey !== process.env.SERVICE_BOT_TOKEN) {
-				set.status = 403
-				return Error('Forbidden: Invalid Service Key')
+				return status(403, 'Forbidden: Invalid Service Key')
 			}
 
 			const accessToken = await jwt.sign({
