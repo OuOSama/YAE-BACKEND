@@ -4,24 +4,24 @@ import openapi from '@elysiajs/openapi'
 import { Elysia } from 'elysia'
 
 // lib
-import { authGuard } from './lib/auth'
+import { security } from './lib/auth'
 
 // modules
 import { ai } from './modules/ai'
-import { auth } from './modules/auth'
+import { authRoute } from './modules/auth'
 import { broadcast } from './modules/broadcast'
 
 const app = new Elysia()
 
 	// --- 🌍 Public Zone ---
-	.use(auth)
+	.use(authRoute)
 	.use(openapi())
 	.get('/', () => ({ message: '⚡ Hello YAE-BACKEND!' }))
 
 	// --- 🛡️ Private Zone (Protected) ---
-	.group('/api', (app) =>
+	.use(security)
+	.group('/api', { isAuth: true }, (app) =>
 		app
-			.use(authGuard)
 			.use(ai)
 			.use(broadcast)
 			.get('/test-auth', () => 'hi this is auth'),
