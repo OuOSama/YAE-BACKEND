@@ -11,14 +11,8 @@ import { ai } from './modules/ai'
 import { authRoute } from './modules/auth'
 import { broadcast } from './modules/broadcast'
 
-const app = new Elysia()
-
-	// --- 🌍 Public Zone ---
-	.use(authRoute)
-	.use(openapi())
-	.get('/', () => ({ message: '⚡ Hello YAE-BACKEND!' }))
-
-	// --- 🛡️ Private Zone (Protected) ---
+// 🔐 Private API: isolated sub-app — ไม่มีทาง leak ออกไป public zone
+const privateApi = new Elysia({ name: 'yae-private' })
 	.use(security)
 	.group('/api', { isAuth: true }, (app) =>
 		app
@@ -27,8 +21,47 @@ const app = new Elysia()
 			.get('/test-auth', () => 'hi this is auth'),
 	)
 
-app.listen(process.env.PORT ?? 3000)
-console.log(`🦊 http://${app.server?.hostname}:${app.server?.port}`)
+export const createApp = () =>
+	new Elysia({ name: 'yae-public' })
+		// 🌍 Public API: open routes for auth, health, and docs
+		.use(authRoute)
+		.use(
+			openapi({
+				documentation: {
+					info: {
+						title: 'YAE Backend API',
+						version: '1.0.0',
+						description: 'Elysia backend for the YAE!.',
+					},
+				},
+			}),
+		)
+		.get('/', () => ({ message: '⚡ Hello YAE-BACKEND!' }))
+		.get('/health', () => ({
+			status: 'ok',
+			timestamp: new Date().toISOString(),
+		}))
+		.onError(({ code, error, set }) => {
+			if (code === 'NOT_FOUND') {
+				set.status = 404
+				return { error: 'Not found' }
+			}
+
+			const message =
+				error instanceof Error ? error.message : 'Internal Server Error'
+			set.status = code === 'VALIDATION' ? 400 : 500
+			return { error: message }
+		})
+		// 🔐 Private API: mount isolated sub-app
+		.use(privateApi)
+
+export const app = createApp()
+
+if (import.meta.main) {
+	const port = Number(process.env.PORT ?? 3001)
+	app.listen(port)
+	console.log(`🦊 http://${app.server?.hostname}:${app.server?.port}`)
+}
 
 // TODO: for Eden in future
 // REPO: https://github.com/elysiajs/eden
