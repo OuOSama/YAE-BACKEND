@@ -1,7 +1,7 @@
 // src/modules/ai/index.ts
 
 import Elysia from 'elysia'
-import { requiredScope } from 'src/lib/auth'
+import { requiredScope } from '@/lib/auth'
 import { AiModel } from './model'
 import { AiService } from './service'
 
@@ -20,13 +20,6 @@ export const ai = new Elysia({ prefix: '/ai' })
 		},
 	)
 	.post('/rag', () => {})
-	.get(
-		'/hi',
-		() => {
-			console.log('Debug Hi - Payload:')
-			return 'hi'
-		},
-		{
-			permission: ['ai:write'],
-		},
-	)
+	.get('/hi', () => 'hi', {
+		permission: ['ai:write'],
+	})
