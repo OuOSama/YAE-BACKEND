@@ -1,15 +1,20 @@
 // src/database/schema/auth/user.ts
 
-import { boolean, pgTable, text, timestamp } from 'drizzle-orm/pg-core'
+import * as t from 'drizzle-orm/pg-core'
+import { pgTable } from 'drizzle-orm/pg-core'
 
-export const users = pgTable('users', {
-	id: text('id').primaryKey(),
-	name: text('name').notNull(),
-	email: text('email').notNull().unique(),
-	emailVerified: boolean('email_verified').notNull().default(false),
-	image: text('image'),
-	createdAt: timestamp('created_at').notNull().defaultNow(),
-	updatedAt: timestamp('updated_at').notNull().defaultNow(),
+export const users = pgTable('user', {
+	id: t.text('id').primaryKey(),
+	name: t.text('name').notNull(),
+	email: t.varchar('email', { length: 255 }).notNull().unique(),
+	emailVerified: t.boolean('email_verified').notNull(),
+	image: t.text('image'),
+	createdAt: t
+		.timestamp('created_at', { precision: 6, withTimezone: true })
+		.notNull(),
+	updatedAt: t
+		.timestamp('updated_at', { precision: 6, withTimezone: true })
+		.notNull(),
 })
 
 export type InsertUser = typeof users.$inferInsert
