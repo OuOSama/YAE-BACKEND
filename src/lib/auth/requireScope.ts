@@ -2,6 +2,7 @@
 
 import { jwt } from '@elysiajs/jwt'
 import { Elysia, t } from 'elysia'
+import { getRequiredEnv } from './env'
 
 export const requiredScope = new Elysia({
 	name: 'required-scopes-plugin',
@@ -9,7 +10,7 @@ export const requiredScope = new Elysia({
 	.use(
 		jwt({
 			name: 'jwt',
-			secret: process.env.SERVICE_JWT_SECRET || 'fallback-secret',
+			secret: getRequiredEnv('SERVICE_JWT_SECRET'),
 			schema: t.Object({
 				scopes: t.Array(t.String()),
 			}),

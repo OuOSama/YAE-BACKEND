@@ -2,12 +2,13 @@
 
 import { jwt } from '@elysiajs/jwt'
 import { Elysia, t } from 'elysia'
+import { getRequiredEnv } from './env'
 
 export const security = new Elysia({ name: 'security-plugin' })
 	.use(
 		jwt({
 			name: 'jwt',
-			secret: process.env.SERVICE_JWT_SECRET,
+			secret: getRequiredEnv('SERVICE_JWT_SECRET'),
 			schema: t.Object({
 				scopes: t.Optional(t.Array(t.String())),
 				iss: t.Optional(t.String()),
@@ -26,7 +27,6 @@ export const security = new Elysia({ name: 'security-plugin' })
 				if (!token) return status('Unauthorized')
 
 				const payload = await jwt.verify(token)
-				console.log(payload)
 				if (!payload) return status('Unauthorized')
 			},
 		}),

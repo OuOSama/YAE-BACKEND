@@ -2,13 +2,14 @@
 
 import { jwt } from '@elysiajs/jwt'
 import { Elysia } from 'elysia'
-import { AuthModel } from 'src/modules/auth/model'
+import { AuthModel } from '@/modules/auth/model'
+import { getRequiredEnv } from './env'
 
 export const serviceAuth = new Elysia()
 	.use(
 		jwt({
 			name: 'jwt',
-			secret: process.env.SERVICE_JWT_SECRET,
+			secret: getRequiredEnv('SERVICE_JWT_SECRET'),
 			exp: '7d',
 		}),
 	)
@@ -16,12 +17,13 @@ export const serviceAuth = new Elysia()
 		'/get-access',
 		async ({ headers, jwt, status }) => {
 			const serviceKey = headers['x-service-key']
+			const expectedServiceKey = getRequiredEnv('SERVICE_BOT_TOKEN')
 
 			if (!serviceKey) return status(401, 'Forbidden: Invalid Service Key')
 
 			// 💡 FUTURE-PROOF: Implement DB storage to manage dynamic scopes and service-level rotation.
 			// BOT service
-			if (serviceKey !== process.env.SERVICE_BOT_TOKEN) {
+			if (serviceKey !== expectedServiceKey) {
 				return status(403, 'Forbidden: Invalid Service Key')
 			}
 
