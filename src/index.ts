@@ -5,8 +5,18 @@ import os from 'node:os'
 import process from 'node:process'
 
 if (cluster.isPrimary) {
-	for (let i = 0; i < os.availableParallelism(); i++) cluster.fork()
+	const workerCount = Math.max(
+		1,
+		Number(process.env.CLUSTER_WORKERS ?? os.availableParallelism()),
+	)
+
+	for (let i = 0; i < workerCount; i++) cluster.fork()
 } else {
-	await import('./app')
-	console.log(`Worker ${process.pid} started`)
+	const { app } = await import('./app')
+	const port = Number(process.env.PORT ?? 3001)
+
+	app.listen(port)
+	console.log(
+		`Worker ${process.pid} started on http://${app.server?.hostname}:${app.server?.port}`,
+	)
 }
