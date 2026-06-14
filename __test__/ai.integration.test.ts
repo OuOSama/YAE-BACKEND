@@ -1,10 +1,10 @@
-// __test__/ai.test.ts
+// __test__/ai.integration.test.ts
 
 import { describe, expect, it } from 'bun:test'
 import Elysia from 'elysia'
 
-import { AiModel } from 'src/modules/ai/model'
-import { AiService } from 'src/modules/ai/service'
+import { AiModel } from '@/modules/ai/model'
+import { AiService } from '@/modules/ai/service'
 
 // ⏱ Helper to set test timeout (vLLM might be slow)
 const TEST_TIMEOUT = 20000 // 10s
