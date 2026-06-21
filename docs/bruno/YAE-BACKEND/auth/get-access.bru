@@ -1,11 +1,11 @@
 meta {
-  name: get access
+  name: get-access
   type: http
-  seq: 2
+  seq: 1
 }
 
 get {
-  url: http://localhost:3001/get-access
+  url: http://localhost:3001/service/get-access
   body: none
   auth: inherit
 }
@@ -14,14 +14,7 @@ headers {
   x-service-key: ABCDRFG
 }
 
-body:json {
-  {
-    "key": "TEST_KEY"
-  }
-}
-
 settings {
   encodeUrl: true
   timeout: 0
 }
-​

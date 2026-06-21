@@ -1,0 +1,27 @@
+meta {
+  name: listening
+  type: ws
+  seq: 1
+}
+
+ws {
+  url: ws://localhost:3001/api/broadcast
+  body: ws
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ5YWUtYmFja2VuZCIsImlzcyI6InlhZS1jb3JlIiwic3ViIjoiYm90LXNlcnZpY2UiLCJyb2xlIjoic2VydmljZSIsInNjb3BlcyI6WyJhaTp3cml0ZSJdLCJleHAiOjE3ODIyMzI5MDQsImlhdCI6MTc4MTYyODEwNH0.FO9KW4SSY6R8lyAU2p0ntT31b9xcLH2B9ZmRO03Rqyg
+}
+
+body:ws {
+  name: message 1
+  type: json
+  content: '''
+    {
+      "service_name": "LISTENING",
+      "status": "online",
+      "timestamp": "2026-06-16T16:31:00.000Z"
+    }
+  '''
+}
