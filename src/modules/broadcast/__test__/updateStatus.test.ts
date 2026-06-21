@@ -1,73 +1,72 @@
 // src/modules/broadcast/__test__/updateStatus.test.ts
 
-import { beforeEach, describe, expect, it } from 'bun:test'
-
+import { beforeEach, describe, expect, test } from 'bun:test'
+import { redis } from '@/lib/redis' // คลีน ๆ เลยค่ะ
 import type { BroadcastModel } from '@/modules/broadcast/model'
 import { BroadcastService } from '@/modules/broadcast/service'
 
-describe('updateStatus', () => {
-	beforeEach(() => {
-		BroadcastService.latestStatus.clear()
+describe('update status in broadcast (ioredis-mock)', () => {
+	const REDIS_KEY = 'broadcast:statuses'
+
+	beforeEach(async () => {
+		// เคลียร์ข้อมูลใน Memory Redis จำลองทุกครั้งก่อนเริ่มเคสใหม่
+		// สั่ง flushall ทีเดียวเกลี้ยงแผง สะอาดสะอ้านแน่
+		await redis.flushall()
 	})
-	it('should add new status to the map', () => {
+
+	test('✅ should successfully save service status into redis with ws_id', async () => {
 		const mockStatus: BroadcastModel.Status = {
-			service_name: 'chat-service',
-			status: 'online',
+			service_name: 'yae-vtuber-gateway',
+			status: 'running',
 			timestamp: new Date(),
-			message: 'Service is running smoothly',
+			message: 'System is healthy',
 		}
+		const mockWsId = 'ws-connection-xyz-123'
 
-		BroadcastService.updateStatus(mockStatus)
+		// สั่งอัปเดตสถานะผ่าน Service หลัก (มันจะวิ่งเข้า ioredis-mock อัตโนมัติ)
+		await BroadcastService.updateStatus(mockStatus, mockWsId)
 
-		expect(BroadcastService.latestStatus.size).toBe(1)
-		expect(BroadcastService.latestStatus.get('chat-service')).toEqual(
-			mockStatus,
+		// ดึงข้อมูลออกมาเช็คผ่านช่องทางของ ioredis-mock
+		const servicePayloadString = await redis.hget(
+			REDIS_KEY,
+			mockStatus.service_name,
 		)
+
+		// ✅ เช็คให้แน่ใจว่าได้ string แน่นอน ไม่ใช่ null
+		expect(servicePayloadString).toBeTypeOf('string')
+
+		// ✅ ใช้ Type Casting ด้วย 'as string' แทนการใช้เครื่องหมาย '!'
+		const parsedPayload = JSON.parse(servicePayloadString as string)
+		expect(parsedPayload.service_name).toBe(mockStatus.service_name)
+		expect(parsedPayload.status).toBe('running')
+		expect(parsedPayload.ws_id).toBe(mockWsId)
 	})
 
-	it('should update existing status when service_name already exists', () => {
+	test('✅ should overwrite existing status when the same service updates again', async () => {
+		const serviceName = 'delunium-game-server'
+		const mockWsId = 'ws-id-456'
+
 		const firstStatus: BroadcastModel.Status = {
-			service_name: 'api-gateway',
-			status: 'running',
-			timestamp: new Date('2024-01-01'),
-		}
-
-		const updatedStatus: BroadcastModel.Status = {
-			service_name: 'api-gateway',
-			status: 'offline',
-			timestamp: new Date('2024-01-02'),
-			message: 'Maintenance mode',
-		}
-
-		BroadcastService.updateStatus(firstStatus)
-		BroadcastService.updateStatus(updatedStatus)
-
-		expect(BroadcastService.latestStatus.size).toBe(1)
-		expect(BroadcastService.latestStatus.get('api-gateway')).toEqual(
-			updatedStatus,
-		)
-	})
-
-	it('should handle multiple different services', () => {
-		const status1: BroadcastModel.Status = {
-			service_name: 'auth-service',
+			service_name: serviceName,
 			status: 'online',
 			timestamp: new Date(),
 		}
 
-		const status2: BroadcastModel.Status = {
-			service_name: 'payment-service',
-			status: 'running',
+		const secondStatus: BroadcastModel.Status = {
+			service_name: serviceName,
+			status: 'error',
 			timestamp: new Date(),
+			message: 'Database connection failed',
 		}
 
-		BroadcastService.updateStatus(status1)
-		BroadcastService.updateStatus(status2)
+		await BroadcastService.updateStatus(firstStatus, mockWsId)
+		await BroadcastService.updateStatus(secondStatus, mockWsId)
 
-		expect(BroadcastService.latestStatus.size).toBe(2)
-		expect(BroadcastService.latestStatus.get('auth-service')).toEqual(status1)
-		expect(BroadcastService.latestStatus.get('payment-service')).toEqual(
-			status2,
-		)
+		const allStatuses = await BroadcastService.getAllStatuses()
+
+		// ตรวจสอบว่าโดนเขียนทับข้อมูลใน Hash field เดิมเรียบร้อย
+		expect(allStatuses.length).toBe(1)
+		expect(allStatuses[0].status).toBe('error')
+		expect(allStatuses[0].message).toBe('Database connection failed')
 	})
 })
