@@ -36,4 +36,5 @@ jobs:
         env:
           # ถ้ามี Secret ของเราก็ใช้ (สำหรับ Repo หลัก) ถ้าไม่มีให้ชี้ไปที่ Local Redis ของเครื่อง CI เองเลย!
           REDIS_URL: ${{ secrets.REDIS_URL || 'redis://localhost:6379' }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: bun test
