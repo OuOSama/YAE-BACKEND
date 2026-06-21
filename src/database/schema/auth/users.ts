@@ -1,4 +1,4 @@
-// src/database/schema/auth/user.ts
+// src/database/schema/auth/users.ts
 
 import * as t from 'drizzle-orm/pg-core'
 import { pgTable } from 'drizzle-orm/pg-core'
