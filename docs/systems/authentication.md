@@ -89,10 +89,10 @@ DISCORD_CLIENT_ID     = your_id
 DISCORD_CLIENT_SECRET = your_secret
 
 # JWT
-SERVICE_JWT_SECRET    = your_secret
+using `bun run key:add <SERVICE_JWT_SECRET> <value>` 
 
 # Service
-SERVICE_BOT_TOKEN     = your_key
+using `bun run key:add <SERVICE_BOT_TOKEN> <value>` 
 
 # DB
 DATABASE_URL          = postgresql://user:pass@localhost:5432/db

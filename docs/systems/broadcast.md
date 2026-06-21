@@ -7,7 +7,7 @@
   ## 🔌 WebSocket Endpoint
   
   ```
-  ws://localhost:3001/broadcast
+  ws://localhost:3001/api/broadcast
   ```
   
   ---
