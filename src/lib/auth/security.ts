@@ -2,13 +2,15 @@
 
 import { jwt } from '@elysiajs/jwt'
 import { Elysia, t } from 'elysia'
-import { getRequiredEnv } from './env'
+import { getDatabaseKeys } from './env'
+
+const jwtSecretFromDb = await getDatabaseKeys('SERVICE_JWT_SECRET')
 
 export const security = new Elysia({ name: 'security-plugin' })
 	.use(
 		jwt({
 			name: 'jwt',
-			secret: getRequiredEnv('SERVICE_JWT_SECRET'),
+			secret: jwtSecretFromDb,
 			schema: t.Object({
 				scopes: t.Optional(t.Array(t.String())),
 				iss: t.Optional(t.String()),
