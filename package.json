@@ -17,27 +17,27 @@
 		"service:add": "bun run ./src/scripts/add_service.ts"
 	},
 	"dependencies": {
-		"@better-auth/api-key": "^1.6.19",
+		"@better-auth/api-key": "^1.6.23",
 		"@elysiajs/cors": "^1.4.2",
 		"@elysiajs/jwt": "^1.4.2",
 		"@elysiajs/openapi": "^1.4.15",
-		"better-auth": "^1.6.19",
+		"better-auth": "^1.6.23",
 		"dotenv": "^17.4.2",
 		"drizzle-orm": "^0.45.2",
 		"drizzle-typebox": "^0.3.3",
 		"elysia": "latest",
 		"ioredis": "^5.11.1",
-		"openai": "^6.42.0",
+		"openai": "^6.45.0",
 		"postgres": "^3.4.9"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.5.0",
+		"@biomejs/biome": "^2.5.3",
 		"@types/ioredis": "^5.0.0",
 		"bun-types": "latest",
 		"drizzle-kit": "^0.31.10",
 		"husky": "^9.1.7",
 		"ioredis-mock": "^8.13.1",
-		"lint-staged": "^17.0.7"
+		"lint-staged": "^17.0.8"
 	},
 	"lint-staged": {
 		"*.{ts,json}": [
