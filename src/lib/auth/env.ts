@@ -27,7 +27,3 @@ export async function getDatabaseKeys(keyName: string): Promise<string> {
 		throw error
 	}
 }
-
-export function getBackendBaseUrl(): string {
-	return process.env.BACKEND_URL?.trim() || 'http://localhost:3001'
-}

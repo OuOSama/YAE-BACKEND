@@ -6,7 +6,6 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { db } from '@/database/client'
 import * as schema from '@/database/schema'
 import { redis } from '../redis'
-import { getBackendBaseUrl } from './env'
 
 export const userAuth = betterAuth({
 	database: drizzleAdapter(db, {
@@ -14,7 +13,7 @@ export const userAuth = betterAuth({
 		usePlural: true,
 		provider: 'pg', // or "mysql", "sqlite"
 	}),
-	baseURL: getBackendBaseUrl(),
+	baseURL: process.env.BACKEND_URL ?? 'http://localhost:3001',
 	trustedOrigins: process.env.TRUSTED_ORIGINS?.split(',') ?? [
 		'http://localhost:3000',
 	],
