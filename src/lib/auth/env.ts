@@ -5,12 +5,6 @@ import { db } from '@/database/client'
 import { secretKeys } from '@/database/schema'
 import { decryptKey } from './hash'
 
-export function getRequiredEnv(name: string): string {
-	const value = process.env[name]?.trim()
-	if (!value) throw new Error(`Missing: ${name}`)
-	return value
-}
-
 export async function getDatabaseKeys(keyName: string): Promise<string> {
 	try {
 		const [row] = await db
