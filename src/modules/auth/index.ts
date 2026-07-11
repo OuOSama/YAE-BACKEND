@@ -1,6 +1,6 @@
 // src/modules/auth/index.ts
 
-import cors from '@elysiajs/cors'
+import { cors } from '@elysiajs/cors'
 import Elysia from 'elysia'
 import { serviceAuth, userAuth } from '@/lib/auth'
 
@@ -8,7 +8,7 @@ export const authRoute = new Elysia()
 	// frontend
 	.use(
 		cors({
-			origin: 'http://localhost:3000',
+			origin: ['http://localhost:3000'],
 			methods: ['GET', 'POST'],
 			credentials: true,
 			allowedHeaders: ['Content-Type', 'Authorization'],
