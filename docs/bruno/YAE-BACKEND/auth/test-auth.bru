@@ -11,33 +11,5 @@ get {
 }
 
 auth:bearer {
-  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ5YWUtYmFja2VuZCIsImlzcyI6InlhZS1jb3JlIiwic3ViIjoiZnJvbnQtZW5kIiwicm9sZSI6InNlcnZpY2UiLCJzY29wZXMiOlsiYWk6d3JpdGUiXSwiZXhwIjoxNzg0Mzg1NjA4LCJpYXQiOjE3ODM3ODA4MDh9.fuawvZgZwBVkaZhNThLn0vbMlvcSaZGE-_X8XzkJgF8
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ5YWUtYmFja2VuZCIsImlzcyI6InlhZS1jb3JlIiwic3ViIjoiZnJvbnQtZW5kIiwicm9sZSI6InNlcnZpY2UiLCJzY29wZXMiOlsiYWk6d3JpdGUiXSwiZXhwIjoxNzg0Mzg5MjY1LCJpYXQiOjE3ODM3ODQ0NjV9.j21gKRPrakXC80gIBcm2PFeWSZMOobrOgCSr5gfJZHI
 }
-
-docs {
-  ### 🛡️ Route: `http://localhost:3001/api/test-auth`
-  
-  **Purpose:** Verifies client identity via **stateless Bearer Token** validation against internal secrets. 🔑✨ and access our premium services! 🦊🛡️
-  
-  ---
-  
-  ### 📋 Specification
-  
-  | Detail | Value |
-  | :--- | :--- |
-  | **Method** | `GET` |
-  | **Auth Type** | `Bearer Token` 🔒 |
-  | **Security** | Stateless Validation (Internal Secrets) ⚙️ |
-  | **Module** | Authentication Guard 🛡️ |
-  
-  ---
-  
-  ### 📤 Responses
-  
-  * **✅ 200 OK** `Access Granted!` ยินดีต้อนรับเข้าสู่ Private Zone นะคะ~ 🎊✨
-  * **🚫 401 Unauthorized** `Oops!` Did you forget, or have you forgotten to enter your token for a long time? Try again! 💢❌
-  
-  ---
-  
-}
-​

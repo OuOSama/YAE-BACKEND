@@ -22,7 +22,7 @@ export const security = new Elysia({ name: 'security-plugin' })
 	)
 	.macro({
 		isAuth: (enabled: boolean) => ({
-			async beforeHandle({ jwt, bearer, status, store }) {
+			async beforeHandle({ jwt, bearer, status }) {
 				if (!enabled) return
 
 				// ใช้ bearer จากปลั๊กอินตรงๆ ไม่ต้องสไลด์เองแบบโค้ดเก่า
@@ -34,10 +34,6 @@ export const security = new Elysia({ name: 'security-plugin' })
 				if (!payload) {
 					return status(401, 'Unauthorized: Invalid Token! 🛡️')
 				}
-
-				// ฝาก payload ไว้ใน store หรือเอาไปใช้ต่อใน context อื่นๆ ได้ค่ะ
-				// (ถ้าอยากให้ Route ถัดๆ ไปเรียกใช้ได้ ให้ใส่ไว้ใน Object Context)
-				Object.assign(store, { user: payload })
 			},
 		}),
 		permission: (scopes: string[] | string) => {
