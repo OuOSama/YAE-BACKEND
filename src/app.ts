@@ -14,12 +14,14 @@ import { broadcast } from './modules/broadcast'
 
 // 🔐 Private API
 const privateApi = new Elysia({ name: 'yae-private' })
-	.use(security)
-	.group('/api', { isAuth: true }, (app) =>
-		app
-			.use(ai)
-			.use(broadcast)
-			.get('/test-auth', () => 'hi this is auth'),
+	.use(security) // โหลดระบบ Auth ให้พร้อม
+	.group('/api', (app) =>
+		app.guard({ isAuth: true }, (safeApp) =>
+			safeApp
+				.use(ai)
+				.use(broadcast)
+				.get('/test-auth', () => 'hi this is auth'),
+		),
 	)
 // 🌍 Public API
 const publicApi = new Elysia({ name: 'yae-public' })
@@ -44,7 +46,7 @@ export const createApp = () =>
 				},
 			}),
 		)
-
+		.use(security)
 		// 🌍 Public API
 		.use(publicApi)
 		// 🔐 Private API

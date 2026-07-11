@@ -20,28 +20,42 @@ export const security = new Elysia({ name: 'security-plugin' })
 			}),
 		}),
 	)
-	// 👇 resolve ทำงานทุก route เสมอ (unconditional) TS เลยเห็น `user` ชัวร์เสมอ
-	.resolve(async ({ jwt, bearer }) => {
-		if (!bearer) return { user: null }
-		const payload = await jwt.verify(bearer)
-		return { user: payload ?? null }
-	})
 	.macro({
 		isAuth: (enabled: boolean) => ({
-			beforeHandle({ user, status }) {
+			async beforeHandle({ jwt, bearer, status, store }) {
 				if (!enabled) return
-				if (!user) return status(401, 'Unauthorized: Token is missing! 🛡️')
+
+				// ใช้ bearer จากปลั๊กอินตรงๆ ไม่ต้องสไลด์เองแบบโค้ดเก่า
+				if (!bearer) {
+					return status(401, 'Unauthorized: Token is missing! 🛡️')
+				}
+
+				const payload = await jwt.verify(bearer)
+				if (!payload) {
+					return status(401, 'Unauthorized: Invalid Token! 🛡️')
+				}
+
+				// ฝาก payload ไว้ใน store หรือเอาไปใช้ต่อใน context อื่นๆ ได้ค่ะ
+				// (ถ้าอยากให้ Route ถัดๆ ไปเรียกใช้ได้ ให้ใส่ไว้ใน Object Context)
+				Object.assign(store, { user: payload })
 			},
 		}),
 		permission: (scopes: string[] | string) => {
 			const required = Array.isArray(scopes) ? scopes : [scopes]
 			return {
-				beforeHandle({ user, status }) {
-					if (!user) {
+				async beforeHandle({ jwt, bearer, status }) {
+					if (!bearer) {
 						return status(401, 'Unauthorized: Token is missing! 🛡️')
 					}
 
-					const hasAllScopes = required.every((s) => user.scopes?.includes(s))
+					const payload = await jwt.verify(bearer)
+					if (!payload) {
+						return status(401, 'Unauthorized: Invalid Token! 🛡️')
+					}
+
+					const hasAllScopes = required.every((s) =>
+						payload.scopes?.includes(s),
+					)
 
 					if (!hasAllScopes) {
 						return status(

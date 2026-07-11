@@ -4,12 +4,11 @@ import { jwt } from '@elysiajs/jwt'
 import { eq } from 'drizzle-orm'
 import { Elysia } from 'elysia'
 import { db } from '@/database/client'
-import { appServices } from '@/database/schema/app_services' // 🚀 มุ่งตรงมาที่นี่ตารางเดียวเลยค่ะ!
+import { appServices } from '@/database/schema/app_services'
 import { AuthModel } from '@/modules/auth/model'
 import { getDatabaseKeys } from './env'
 import { decryptKey } from './hash'
 
-// 🔐 ดึงคีย์หลักสำหรับเซ็นสิทธิ์ JWT จากฐานข้อมูลตอนเริ่มรันระบบ (ยังอยู่เพื่อความปลอดภัยระดับ Core)
 const jwtSecretFromDb = await getDatabaseKeys('SERVICE_JWT_SECRET')
 
 export const serviceAuth = new Elysia({ prefix: '/service' })
