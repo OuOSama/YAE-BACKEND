@@ -2,6 +2,7 @@
 
 import openapi from '@elysiajs/openapi'
 import { Elysia } from 'elysia'
+import { rateLimit } from 'elysia-rate-limit'
 
 // lib
 import { security } from './lib/auth'
@@ -11,7 +12,7 @@ import { ai } from './modules/ai'
 import { authRoute } from './modules/auth'
 import { broadcast } from './modules/broadcast'
 
-// 🔐 Private API: isolated sub-app — ไม่มีทาง leak ออกไป public zone
+// 🔐 Private API
 const privateApi = new Elysia({ name: 'yae-private' })
 	.use(security)
 	.group('/api', { isAuth: true }, (app) =>
@@ -20,10 +21,17 @@ const privateApi = new Elysia({ name: 'yae-private' })
 			.use(broadcast)
 			.get('/test-auth', () => 'hi this is auth'),
 	)
+// 🌍 Public API
+const publicApi = new Elysia({ name: 'yae-public' })
+	.get('/', () => ({ message: '⚡ Hello YAE-BACKEND!' }))
+	.get('/health', () => ({
+		status: 'ok',
+		timestamp: new Date().toISOString(),
+	}))
 
 export const createApp = () =>
-	new Elysia({ name: 'yae-public' })
-		// 🌍 Public API: open routes for auth, health, and docs
+	new Elysia({ name: 'yae-app' })
+		.use(rateLimit({ max: 45, duration: 60000 }))
 		.use(authRoute)
 		.use(
 			openapi({
@@ -36,14 +44,15 @@ export const createApp = () =>
 				},
 			}),
 		)
-		.get('/', () => ({ message: '⚡ Hello YAE-BACKEND!' }))
-		.get('/health', () => ({
-			status: 'ok',
-			timestamp: new Date().toISOString(),
-		}))
+
+		// 🌍 Public API
+		.use(publicApi)
+		// 🔐 Private API
+		.use(privateApi)
 		.onError(({ code, error, set }) => {
 			if (code === 'NOT_FOUND') {
 				set.status = 404
+				console.log('NOOO')
 				return { error: 'Not found' }
 			}
 
@@ -52,8 +61,6 @@ export const createApp = () =>
 			set.status = code === 'VALIDATION' ? 400 : 500
 			return { error: message }
 		})
-		// 🔐 Private API: mount isolated sub-app
-		.use(privateApi)
 
 export const app = createApp()
 
