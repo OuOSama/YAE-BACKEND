@@ -1,6 +1,5 @@
 // src/app.ts
 
-import { cors } from '@elysiajs/cors'
 import openapi from '@elysiajs/openapi'
 import { Elysia } from 'elysia'
 
@@ -24,15 +23,6 @@ const privateApi = new Elysia({ name: 'yae-private' })
 
 export const createApp = () =>
 	new Elysia({ name: 'yae-public' })
-		.use(
-			cors({
-				// 2. อนุญาตเฉพาะ Origin ของ Frontend ซามะ
-				origin: ['http://10.101.0.108:3000', 'http://localhost:3000'],
-				methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-				allowedHeaders: ['Content-Type', 'Authorization'],
-				credentials: true, // ใส่เป็น true ถ้ามีการใช้ Cookies หรือ Session ร่วมกันค่ะ
-			}),
-		)
 		// 🌍 Public API: open routes for auth, health, and docs
 		.use(authRoute)
 		.use(
