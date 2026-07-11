@@ -18,6 +18,7 @@
 	},
 	"dependencies": {
 		"@better-auth/api-key": "^1.6.23",
+		"@elysia/bearer": "^1.4.4",
 		"@elysiajs/cors": "^1.4.2",
 		"@elysiajs/jwt": "^1.4.2",
 		"@elysiajs/openapi": "^1.4.15",

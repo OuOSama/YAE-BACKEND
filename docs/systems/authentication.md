@@ -18,7 +18,6 @@ GET http://localhost:3001/get-access
 | :--- | :--- |
 | **[index.ts](../../src/modules/auth/index.ts)** | 🚦 HTTP/HTTPS endpoint handler |
 | **[model.ts](../../src/modules/auth/model.ts)** | 🛡️ Type-safe models with Elysia validation |
-| **[requireScope.ts](../../src/lib/auth/requireScope.ts)** | 🔑 Scope-based authorization macro |
 | **[security.ts](../../src/lib/auth/security.ts)** | 🛡️ JWT & session verification middleware |
 | **[serviceAuth.ts](../../src/lib/auth/serviceAuth.ts)** | 🤖 Service-to-service token flow |
 | **[userAuth.ts](../../src/lib/auth/userAuth.ts)** | 👥 Better Auth + Drizzle + OAuth config |

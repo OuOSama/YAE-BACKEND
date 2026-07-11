@@ -1,12 +1,12 @@
 // src/modules/ai/index.ts
 
 import Elysia from 'elysia'
-import { requiredScope } from '@/lib/auth'
+import { security } from '@/lib/auth' // 👈 import เข้ามา
 import { AiModel } from './model'
 import { AiService } from './service'
 
 export const ai = new Elysia({ prefix: '/ai' })
-	.use(requiredScope)
+	.use(security) // 👈 เติมตรงนี้ TS จะรู้จัก permission ทันที
 	.post(
 		'/chat',
 		async ({ body }) => {
@@ -16,10 +16,12 @@ export const ai = new Elysia({ prefix: '/ai' })
 		{
 			body: AiModel.ChatRequest,
 			response: AiModel.ChatResponse,
-			permission: ['ai:write'],
+			permission: ['ai:chat'],
 		},
 	)
-	.post('/rag', () => {})
+	.post('/rag', () => {}, {
+		permission: ['ai:rag'],
+	})
 	.get('/hi', () => 'hi', {
-		permission: ['ai:write'],
+		permission: ['ai:read'],
 	})
