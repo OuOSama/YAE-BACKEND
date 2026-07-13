@@ -16,7 +16,7 @@ import { openapiPlugin } from './utils/openapi'
 
 // 🔐 Private API
 const privateApi = new Elysia({ name: 'yae-private' })
-	.use(security) // โหลดระบบ Auth ให้พร้อม
+	.use(security)
 	.group('/api', (app) =>
 		app.guard({ isAuth: true }, (safeApp) =>
 			safeApp
