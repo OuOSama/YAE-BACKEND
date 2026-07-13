@@ -1,6 +1,5 @@
 // src/app.ts
 
-import openapi from '@elysiajs/openapi'
 import { Elysia } from 'elysia'
 import { rateLimit } from 'elysia-rate-limit'
 
@@ -11,6 +10,9 @@ import { security } from './lib/auth'
 import { ai } from './modules/ai'
 import { authRoute } from './modules/auth'
 import { broadcast } from './modules/broadcast'
+
+// utils
+import { openapiPlugin } from './utils/openapi'
 
 // 🔐 Private API
 const privateApi = new Elysia({ name: 'yae-private' })
@@ -34,18 +36,9 @@ const publicApi = new Elysia({ name: 'yae-public' })
 export const createApp = () =>
 	new Elysia({ name: 'yae-app' })
 		.use(rateLimit({ max: 45, duration: 60000 }))
+		.use(openapiPlugin)
 		.use(authRoute)
-		.use(
-			openapi({
-				documentation: {
-					info: {
-						title: 'YAE Backend API',
-						version: '1.0.0',
-						description: 'Elysia backend for the YAE!.',
-					},
-				},
-			}),
-		)
+
 		.use(security)
 		// 🌍 Public API
 		.use(publicApi)

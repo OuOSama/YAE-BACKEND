@@ -2,8 +2,8 @@
 	"name": "yae-backend",
 	"version": "1.0.50",
 	"scripts": {
-		"dev": "bun run --bun --watch src/app.ts",
-		"start": "bun run src/app.ts",
+		"dev": "NODE_ENV=development bun run --bun --watch src/app.ts",
+		"start": "NODE_ENV=production bun run src/app.ts",
 		"test": "bun test",
 		"test:prod": "NODE_ENV=production bun test",
 		"check": "bunx biome check --write --no-errors-on-unmatched",
