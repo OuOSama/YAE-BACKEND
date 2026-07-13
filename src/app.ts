@@ -44,18 +44,6 @@ export const createApp = () =>
 		.use(publicApi)
 		// 🔐 Private API
 		.use(privateApi)
-		.onError(({ code, error, set }) => {
-			if (code === 'NOT_FOUND') {
-				set.status = 404
-				console.log('NOOO')
-				return { error: 'Not found' }
-			}
-
-			const message =
-				error instanceof Error ? error.message : 'Internal Server Error'
-			set.status = code === 'VALIDATION' ? 400 : 500
-			return { error: message }
-		})
 
 export const app = createApp()
 
