@@ -9,11 +9,15 @@
 	},
 	"dependencies": {
 		"@elysia/openapi": "^1.4.15",
-		"elysia": "latest"
+		"better-auth": "^1.6.23",
+		"drizzle-orm": "^1.0.0-rc.4",
+		"elysia": "latest",
+		"postgres": "^3.4.9"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.5.4",
 		"bun-types": "latest",
+		"drizzle-kit": "^1.0.0-rc.4",
 		"husky": "^9.1.7",
 		"lint-staged": "^17.0.8"
 	},
