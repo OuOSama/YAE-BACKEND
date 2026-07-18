@@ -1,7 +1,7 @@
 import { randomUUIDv7 } from 'bun';
 import { pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
 
-export const users = pgTable('user', {
+export const test_users = pgTable('test_user', {
 	id: varchar('id')
 		.$defaultFn(() => randomUUIDv7())
 		.primaryKey(),

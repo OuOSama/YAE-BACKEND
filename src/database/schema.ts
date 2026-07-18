@@ -1,9 +1,9 @@
-export * from './schema/users';
+export * from './schema/test_users';
 
-import { users } from './schema/users';
+import { test_users } from './schema/test_users';
 
 export const table = {
-	users,
+	test_users,
 } as const;
 
 export type Table = typeof table;

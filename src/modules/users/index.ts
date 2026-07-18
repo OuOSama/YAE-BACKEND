@@ -2,7 +2,7 @@ import { createInsertSchema } from 'drizzle-typebox';
 import Elysia, { t } from 'elysia';
 import { table } from '@/database/schema';
 
-const _createUser = createInsertSchema(table.users, {
+const _createUser = createInsertSchema(table.test_users, {
 	// Replace email with Elysia's email type
 	email: t.String({ format: 'email' }),
 });
