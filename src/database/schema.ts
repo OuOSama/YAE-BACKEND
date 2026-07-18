@@ -1,3 +1,5 @@
+export * from './schema/users';
+
 import { users } from './schema/users';
 
 export const table = {
