@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "biomejs.biome",                    // 🧹 Format & lint — fast all-in-one
+        "usernamehw.errorlens",             // 🚨 Inline error/warning highlighting right in the editor
+        "YoavBls.pretty-ts-errors",         // 💅 Makes TypeScript error messages readable
+        "mhutchie.git-graph",               // 🌳 Visualize branch/commit history (used in your screenshots)
+        "PKief.material-icon-theme",        // 🎨 File & folder icons for quicker visual scanning
+        "ms-azuretools.vscode-docker",      // 🐳 Docker support — build/run/manage containers
+        "ms-azuretools.vscode-containers"   // 📦 Dev container support for consistent environments
+    ]
+}
