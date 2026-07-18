@@ -1,5 +1,6 @@
 declare module 'bun' {
 	interface Env {
+		FRONTEND_URL: string;
 		BACKEND_URL: string;
 		PORT: string;
 
