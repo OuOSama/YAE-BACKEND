@@ -11,6 +11,10 @@ export const openApiPlugin = isDev
 						title: 'YAE Backend API',
 						version: '1.0.0',
 						description: 'Elysia backend for the YAE ecosystem.',
+						license: {
+							name: 'MIT',
+							url: 'https://github.com/OuOSama/YAE-BACKEND/blob/main/LICENSE',
+						},
 					},
 					components: {
 						securitySchemes: {
