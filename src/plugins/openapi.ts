@@ -15,6 +15,10 @@ export const openApiPlugin = isDev
 							name: 'MIT',
 							url: 'https://github.com/OuOSama/YAE-BACKEND/blob/main/LICENSE',
 						},
+						contact: {
+							name: 'OuOSama',
+							url: 'https://discord.gg/PkXWyVhCfr',
+						},
 					},
 					components: {
 						securitySchemes: {
