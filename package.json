@@ -2,7 +2,8 @@
 	"name": "yae-backend",
 	"version": "1.0.0",
 	"scripts": {
-		"dev": "NODE_ENV=development bun run --watch src/app.ts",
+		"dev": "NODE_ENV=development bun --bun run --watch src/app.ts",
+		"start": "NODE_ENV=production bun --bun run src/app.ts",
 		"biome": "bunx --bun @biomejs/biome check --write",
 		"prepare": "husky"
 	},
