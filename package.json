@@ -10,7 +10,8 @@
 	"dependencies": {
 		"@elysia/openapi": "^1.4.15",
 		"better-auth": "^1.6.23",
-		"drizzle-orm": "^1.0.0-rc.4",
+		"drizzle-orm": "^0.45.2",
+		"drizzle-typebox": "^0.3.3",
 		"elysia": "latest",
 		"postgres": "^3.4.9"
 	},
