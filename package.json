@@ -5,7 +5,10 @@
 		"dev": "NODE_ENV=development bun --bun run --watch src/app.ts",
 		"start": "NODE_ENV=production bun --bun run src/app.ts",
 		"biome": "bunx --bun @biomejs/biome check --write",
-		"prepare": "husky"
+		"prepare": "husky",
+		"db:gen": "bunx drizzle-kit generate",
+		"db:migrate": "bunx drizzle-kit migrate",
+		"db:push": "bunx drizzle-kit push"
 	},
 	"dependencies": {
 		"@elysia/openapi": "^1.4.15",
@@ -18,7 +21,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.5.4",
 		"bun-types": "latest",
-		"drizzle-kit": "^1.0.0-rc.4",
+		"drizzle-kit": "^0.31.10",
 		"husky": "^9.1.7",
 		"lint-staged": "^17.0.8"
 	},
