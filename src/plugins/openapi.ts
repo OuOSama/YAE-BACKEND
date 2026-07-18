@@ -3,7 +3,7 @@ import { Elysia } from 'elysia';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
-export const openApiPlugin = isDev
+export const yaeOpenApiPlugin = isDev
 	? new Elysia().use(
 			openapi({
 				documentation: {
