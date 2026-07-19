@@ -6,12 +6,10 @@ import { userManage } from '@/modules/users';
 // plugin
 import { yaeAuthPlugin } from '@/plugins/betterAuth';
 import { yaeCorsPlugin } from '@/plugins/cors';
-import { yaeLoggerPlugin } from '@/plugins/logger';
 import { memCheckPlugin } from '@/plugins/mem-check';
 import { yaeOpenApiPlugin } from '@/plugins/openapi';
 
 const _app = new Elysia()
-	.use(yaeLoggerPlugin)
 	.use(yaeOpenApiPlugin)
 	.use(yaeCorsPlugin)
 	.use(yaeAuthPlugin)
