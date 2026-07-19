@@ -17,7 +17,6 @@
 		"drizzle-orm": "^0.45.2",
 		"drizzle-typebox": "^0.3.3",
 		"elysia": "latest",
-		"logixlysia": "^6.6.0",
 		"postgres": "^3.4.9"
 	},
 	"devDependencies": {
