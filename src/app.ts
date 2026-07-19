@@ -9,7 +9,7 @@ import { yaeCorsPlugin } from '@/plugins/cors';
 import { memCheckPlugin } from '@/plugins/mem-check';
 import { yaeOpenApiPlugin } from '@/plugins/openapi';
 
-const _app = new Elysia()
+const app = new Elysia()
 	.use(yaeOpenApiPlugin)
 	.use(yaeCorsPlugin)
 	.use(yaeAuthPlugin)
@@ -21,3 +21,5 @@ const _app = new Elysia()
 	})
 
 	.listen(process.env.PORT ?? 3001);
+
+console.log(`🦊 http://${app.server?.hostname}:${app.server?.port}`);
