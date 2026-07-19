@@ -9,7 +9,7 @@ import { yaeCorsPlugin } from '@/plugins/cors';
 import { memCheckPlugin } from '@/plugins/mem-check';
 import { yaeOpenApiPlugin } from '@/plugins/openapi';
 
-const app = new Elysia()
+const app = new Elysia({ name: 'YAE-BACKEND' })
 	.use(yaeOpenApiPlugin)
 	.use(yaeCorsPlugin)
 	.use(yaeAuthPlugin)
