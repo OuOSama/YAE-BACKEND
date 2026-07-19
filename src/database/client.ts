@@ -11,6 +11,7 @@ if (connectionString.includes('postgres:postgres@supabase_db_')) {
 	connectionString = url.href;
 }
 
+// ref: https://supabase.com/docs/guides/database/drizzle
 // Disable prefetch as it is not supported for "Transaction" pool mode
 export const client = postgres(connectionString, { prepare: false });
 export const db = drizzle({ client });
