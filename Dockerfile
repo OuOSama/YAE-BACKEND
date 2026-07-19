@@ -17,7 +17,7 @@ RUN bun build \
 	--minify-whitespace \
 	--minify-syntax \
 	--outfile server \
-	src/index.ts
+	src/cluster.ts
 
 FROM gcr.io/distroless/base
 
