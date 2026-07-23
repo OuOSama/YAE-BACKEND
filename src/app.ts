@@ -10,7 +10,7 @@ import { yaeLoggerPlugin } from '@/plugins/logger';
 import { memCheckPlugin } from '@/plugins/mem-check';
 import { yaeOpenApiPlugin } from '@/plugins/openapi';
 
-new Elysia({ name: 'YAE-BACKEND' })
+const app = new Elysia({ name: 'YAE-BACKEND' })
 	.use(yaeLoggerPlugin)
 	.use(yaeOpenApiPlugin)
 	.use(yaeCorsPlugin)
@@ -20,6 +20,6 @@ new Elysia({ name: 'YAE-BACKEND' })
 	.get('/', () => 'Hello Elysia')
 	.get('/user', ({ user }) => user, {
 		auth: true,
-	})
+	});
 
-	.listen(process.env.PORT ?? 3001);
+app.listen(process.env.PORT ?? 3001);
