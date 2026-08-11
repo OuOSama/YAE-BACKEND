@@ -13,19 +13,19 @@
 	"dependencies": {
 		"@elysia/cors": "^1.4.2",
 		"@elysia/openapi": "^1.4.15",
-		"better-auth": "^1.6.23",
+		"better-auth": "^1.6.26",
 		"drizzle-orm": "^0.45.2",
 		"drizzle-typebox": "^0.3.3",
 		"elysia": "latest",
-		"logixlysia": "^6.6.0",
+		"logixlysia": "^6.7.0",
 		"postgres": "^3.4.9"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.5.4",
+		"@biomejs/biome": "2.5.7",
 		"bun-types": "latest",
 		"drizzle-kit": "^0.31.10",
 		"husky": "^9.1.7",
-		"lint-staged": "^17.0.8"
+		"lint-staged": "^17.3.0"
 	},
 	"lint-staged": {
 		"*.{ts,json}": [
