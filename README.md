@@ -83,11 +83,11 @@ coming soon
 |-------|-----------|---------|---------|
 | Runtime | **Bun** | latest | Fast TypeScript execution & testing |
 | Framework | **Elysia.js** | latest | Type-safe HTTP framework with macros |
-| Database | **PostgreSQL** | 14+ | Reliable persistent data storage |
-| ORM | **Drizzle** | 0.45.1 | Type-safe queries with inference |
-| Auth | **better-auth** | 1.4.10 | OAuth + session management |
+| Database | **PostgreSQL** | 19+ | Reliable persistent data storage |
+| ORM | **Drizzle** | latest | Type-safe queries with inference |
+| Auth | **better-auth** | latest | OAuth + session management |
 | Validation | **TypeBox** | - | Runtime schema validation |
-| Linter | **Biome** | 2.3.11 | Format & lint automation |
+| Linter | **Biome** | latest | Format & lint automation |
 
 ---
 
